@@ -2,11 +2,17 @@ import express from "express";
 import { prisma } from "../server";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { convertDates } from "../middleware/convertDates";
+import { getTaskFilter } from "../middleware/getTaskFilter";
 
 export const route = express.Router();
 
-route.get("/", async (req, res) => {
+route.get("/", getTaskFilter, async (req, res) => {
   try {
+    if (req.body.filter) {
+      console.log(req.body.filter);
+      const taskList = await prisma.task.findMany(req.body.filter);
+      return res.status(200).json(taskList);
+    }
     const taskList = await prisma.task.findMany();
     return res.status(200).json(taskList);
   } catch (error) {
@@ -18,16 +24,17 @@ route.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const task = await prisma.task.findUniqueOrThrow({ where: { taskId: id }, include: { comments: true } });
+    const task = await prisma.task.findUniqueOrThrow({
+      where: { taskId: id },
+      include: { comments: true },
+    });
     return res.status(200).json(task);
   } catch (error) {
     if ((error as PrismaClientKnownRequestError).code === "P2025") {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          error: "Não encontramos nenhuma tarefa com esse ID.",
-        });
+      return res.status(404).json({
+        success: false,
+        error: "Não encontramos nenhuma tarefa com esse ID.",
+      });
     }
     return res
       .status(500)
@@ -56,19 +63,37 @@ route.post("/", convertDates, async ({ body }, res) => {
   }
 });
 
-route.delete("/:id", async (req, res) => {
+route.put("/:id", convertDates, async (req, res) => {
   try {
-    const id = req.params.id;
-    const response = await prisma.task.delete({ where: { taskId: id } });
+    const response = await prisma.task.update({
+      where: { taskId: req.params.id },
+      data: req.body,
+    });
+
+    return res.status(201).json({ success: true, message: response });
+  } catch (error) {
+    if ((error as PrismaClientKnownRequestError).code === "P2025") {
+      return res.status(404).json({
+        success: false,
+        error: "Não encontramos nenhuma tarefa com esse ID.",
+      });
+    }
+
+    return res.status(500).json({ error: "Ocorreu um erro interno." });
+  }
+});
+
+route.delete("/:id", async ({ params }, res) => {
+  try {
+    await prisma.comment.deleteMany({ where: { taskId: params.id } });
+    const response = await prisma.task.delete({ where: { taskId: params.id } });
     return res.status(200).json({ success: true, data: response });
   } catch (error) {
     if ((error as PrismaClientKnownRequestError).code === "P2025") {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          error: "Não encontramos nenhuma tarefa com esse ID.",
-        });
+      return res.status(404).json({
+        success: false,
+        error: "Não encontramos nenhuma tarefa com esse ID.",
+      });
     }
     return res
       .status(500)

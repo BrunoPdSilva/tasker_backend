@@ -1,0 +1,55 @@
+[
+  {
+    "taskId": "87ecdfb5-f384-473c-ac99-3966821bb522",
+    "owner": "kZmRRcjT0MRM7lLAh35h12LSWRz1",
+    "assignedTo": [
+      "OFCZiF8MecPIk5pzgpwIi8G9Wiq2",
+      "ZRMmLmQyZMcA2c2f05eN4yfCFpV2"
+    ],
+    "title": "Criar backend.",
+    "description": "Criar CRUD para o Tasker.",
+    "toDoList": [
+      "Research previous projects",
+      "Create an outline",
+      "Gather necessary data"
+    ],
+    "images": null,
+    "isFavorite": true,
+    "categories": ["Denvolvimento", "Design"],
+    "status": "Em progresso",
+    "createdAt": "2023-07-06T16:56:30.277Z",
+    "deadline": "2023-07-17T00:00:00.000Z"
+  },
+  {
+    "taskId": "d05ea4c6-31a0-49db-81e4-e39f13d39be4",
+    "owner": "bvoNDSAcnoasdDSNOAJ",
+    "assignedTo": ["BJUVD1cas61", "bfdvfd164"],
+    "title": "Complete project proposal",
+    "description": "Write a detailed project proposal for the upcoming client meeting.",
+    "toDoList": [
+      "Research previous projects",
+      "Create an outline",
+      "Gather necessary data"
+    ],
+    "images": null,
+    "isFavorite": false,
+    "categories": ["Desenvolvimento", "Design"],
+    "status": "Em progresso",
+    "createdAt": "2023-07-06T16:57:01.386Z",
+    "deadline": "2023-07-10T20:00:00.000Z"
+  },
+  {
+    "taskId": "e2c110d1-e1e8-403d-8b74-26d65181c38f",
+    "owner": "nuegajsnxb41891",
+    "assignedTo": ["vrebrenoj", "VdACREWvds"],
+    "title": "Review and provide feedback",
+    "description": "Review the project proposal and provide your feedback and suggestions.",
+    "toDoList": [],
+    "images": null,
+    "isFavorite": true,
+    "categories": ["Design"],
+    "status": "Concluído",
+    "createdAt": "2023-07-06T16:57:24.320Z",
+    "deadline": null
+  }
+]

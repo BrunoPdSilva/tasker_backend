@@ -20,7 +20,8 @@ model Task {
   toDoList    String[]
   images      String?
   isFavorite  Boolean
-  isCompleted Boolean
+  categories  String[]
+  status      String
   createdAt   DateTime  @default(now())
   deadline    DateTime?
   comments    Comment[]
